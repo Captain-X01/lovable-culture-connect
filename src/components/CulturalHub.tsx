@@ -52,9 +52,7 @@ const CulturalHub = () => {
     setQuizCompleted(false);
   };
   return <div className="w-full max-w-2xl mx-auto">
-      <h2 className="text-3xl font-display font-bold text-center mb-8">
-        <span className="gradient-text">Cultural Connection Hub</span>
-      </h2>
+      
       
       <Tabs defaultValue="quiz" className="w-full">
         
