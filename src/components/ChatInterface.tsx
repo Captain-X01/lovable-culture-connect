@@ -1,10 +1,9 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageCircle, Send, Mic, MicOff, Language } from "lucide-react";
+import { MessageCircle, Send, Mic, MicOff, Languages } from "lucide-react";
 
 interface Message {
   id: number;
@@ -47,7 +46,6 @@ const ChatInterface = () => {
   const handleSendMessage = () => {
     if (inputMessage.trim() === "") return;
     
-    // Add user message
     setMessages([
       ...messages,
       { 
@@ -60,7 +58,6 @@ const ChatInterface = () => {
     
     setInputMessage("");
     
-    // Simulate response after a delay
     setTimeout(() => {
       let response = "";
       if (inputMessage.toLowerCase().includes("wait time") || inputMessage.toLowerCase().includes("waiting")) {
@@ -88,7 +85,6 @@ const ChatInterface = () => {
     setIsRecording(!isRecording);
     
     if (!isRecording) {
-      // Simulate voice message after starting recording
       setTimeout(() => {
         setIsRecording(false);
         setMessages([
@@ -101,7 +97,6 @@ const ChatInterface = () => {
           }
         ]);
         
-        // Simulate response
         setTimeout(() => {
           setMessages(prev => [
             ...prev,
@@ -120,7 +115,6 @@ const ChatInterface = () => {
   const changeLanguage = (lang: string) => {
     setCurrentLanguage(lang);
     
-    // Simulate language change
     setMessages(prev => [
       ...prev,
       { 
@@ -150,7 +144,7 @@ const ChatInterface = () => {
               Chat
             </TabsTrigger>
             <TabsTrigger value="translate" className="data-[state=active]:bg-white data-[state=active]:text-brand-purple">
-              <Language className="h-4 w-4 mr-2" />
+              <Languages className="h-4 w-4 mr-2" />
               Translate
             </TabsTrigger>
           </TabsList>
@@ -252,7 +246,7 @@ const ChatInterface = () => {
                 </p>
                 <div className="flex justify-center mt-4">
                   <Button onClick={() => setCurrentLanguage("en")} className="bg-brand-purple hover:bg-brand-purple/90">
-                    <Language className="h-4 w-4 mr-2" />
+                    <Languages className="h-4 w-4 mr-2" />
                     Return to Chat
                   </Button>
                 </div>

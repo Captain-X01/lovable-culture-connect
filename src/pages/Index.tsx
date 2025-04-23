@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import FeatureCard from "@/components/FeatureCard";
@@ -6,7 +5,7 @@ import ChatInterface from "@/components/ChatInterface";
 import CulturalHub from "@/components/CulturalHub";
 import GamePreview from "@/components/GamePreview";
 import Footer from "@/components/Footer";
-import { MessageCircle, Translate, Gamepad, Award, Headphones } from "lucide-react";
+import { MessageCircle, Languages, Gamepad, Award, Headphones } from "lucide-react";
 
 const Index = () => {
   return (
@@ -57,7 +56,7 @@ const Index = () => {
             <FeatureCard 
               title="Language Translation" 
               description="Seamless translation between 10+ languages for global support"
-              icon={<Translate className="h-5 w-5" />} 
+              icon={<Languages className="h-5 w-5" />} 
             />
             <FeatureCard 
               title="Interactive Games" 
