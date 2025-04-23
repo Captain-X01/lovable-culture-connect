@@ -5,61 +5,36 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Award, Users, User, Star, Check, X } from "lucide-react";
 import CulturalFAQ from "./CulturalFAQ";
 import CulturalVideo from "./CulturalVideo";
-
-const quizQuestions = [
-  {
-    question: "What is the main purpose of the Cultural Connection Hub?",
-    options: [
-      "To provide entertainment only",
-      "To transform waiting time into a cultural experience",
-      "To replace human customer service",
-      "To collect customer data"
-    ],
-    correctAnswer: 1
-  },
-  {
-    question: "Which feature allows real-time communication in different languages?",
-    options: [
-      "Cultural insights",
-      "Entertainment games",
-      "Translation module",
-      "AR experiences"
-    ],
-    correctAnswer: 2
-  },
-  {
-    question: "What can customers earn by completing activities in the Cultural Connection Hub?",
-    options: [
-      "Crypto tokens",
-      "Free products",
-      "Rewards like discounts",
-      "Airline miles"
-    ],
-    correctAnswer: 2
-  }
-];
-
+const quizQuestions = [{
+  question: "What is the main purpose of the Cultural Connection Hub?",
+  options: ["To provide entertainment only", "To transform waiting time into a cultural experience", "To replace human customer service", "To collect customer data"],
+  correctAnswer: 1
+}, {
+  question: "Which feature allows real-time communication in different languages?",
+  options: ["Cultural insights", "Entertainment games", "Translation module", "AR experiences"],
+  correctAnswer: 2
+}, {
+  question: "What can customers earn by completing activities in the Cultural Connection Hub?",
+  options: ["Crypto tokens", "Free products", "Rewards like discounts", "Airline miles"],
+  correctAnswer: 2
+}];
 const CulturalHub = () => {
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [hasAnswered, setHasAnswered] = useState(false);
   const [score, setScore] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
-  
   const handleSelectAnswer = (index: number) => {
     if (hasAnswered) return;
     setSelectedAnswer(index);
   };
-  
   const checkAnswer = () => {
     if (selectedAnswer === null) return;
-    
     setHasAnswered(true);
     if (selectedAnswer === quizQuestions[activeQuestionIndex].correctAnswer) {
       setScore(prev => prev + 1);
     }
   };
-  
   const nextQuestion = () => {
     if (activeQuestionIndex < quizQuestions.length - 1) {
       setActiveQuestionIndex(prev => prev + 1);
@@ -69,7 +44,6 @@ const CulturalHub = () => {
       setQuizCompleted(true);
     }
   };
-  
   const restartQuiz = () => {
     setActiveQuestionIndex(0);
     setSelectedAnswer(null);
@@ -77,28 +51,13 @@ const CulturalHub = () => {
     setScore(0);
     setQuizCompleted(false);
   };
-
-  return (
-    <div className="w-full max-w-2xl mx-auto">
+  return <div className="w-full max-w-2xl mx-auto">
       <h2 className="text-3xl font-display font-bold text-center mb-8">
         <span className="gradient-text">Cultural Connection Hub</span>
       </h2>
       
       <Tabs defaultValue="quiz" className="w-full">
-        <TabsList className="grid grid-cols-3 mb-6">
-          <TabsTrigger value="insights" className="data-[state=active]:bg-brand-purple data-[state=active]:text-white">
-            <BookOpen className="h-4 w-4 mr-2" />
-            Cultural Insights
-          </TabsTrigger>
-          <TabsTrigger value="quiz" className="data-[state=active]:bg-brand-purple data-[state=active]:text-white">
-            <Award className="h-4 w-4 mr-2" />
-            Interactive Quiz
-          </TabsTrigger>
-          <TabsTrigger value="community" className="data-[state=active]:bg-brand-purple data-[state=active]:text-white">
-            <Users className="h-4 w-4 mr-2" />
-            Community
-          </TabsTrigger>
-        </TabsList>
+        
         
         <TabsContent value="insights" className="mt-0">
           <Card>
@@ -144,8 +103,7 @@ const CulturalHub = () => {
         <TabsContent value="quiz" className="mt-0">
           <Card>
             <CardContent className="p-6">
-              {!quizCompleted ? (
-                <div>
+              {!quizCompleted ? <div>
                   <div className="flex justify-between items-center mb-6">
                     <span className="font-medium">Question {activeQuestionIndex + 1}/{quizQuestions.length}</span>
                     <span className="px-3 py-1 bg-brand-purple/10 text-brand-purple rounded-full text-sm font-medium">Score: {score}</span>
@@ -154,48 +112,22 @@ const CulturalHub = () => {
                   <h3 className="text-xl font-semibold mb-4">{quizQuestions[activeQuestionIndex].question}</h3>
                   
                   <div className="space-y-3 mb-6">
-                    {quizQuestions[activeQuestionIndex].options.map((option, index) => (
-                      <div
-                        key={index}
-                        className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                          selectedAnswer === index 
-                            ? hasAnswered 
-                              ? index === quizQuestions[activeQuestionIndex].correctAnswer
-                                ? 'border-green-500 bg-green-50'
-                                : 'border-red-500 bg-red-50'
-                              : 'border-brand-purple bg-brand-purple/5' 
-                            : 'hover:bg-muted'
-                        }`}
-                        onClick={() => handleSelectAnswer(index)}
-                      >
+                    {quizQuestions[activeQuestionIndex].options.map((option, index) => <div key={index} className={`p-3 border rounded-lg cursor-pointer transition-colors ${selectedAnswer === index ? hasAnswered ? index === quizQuestions[activeQuestionIndex].correctAnswer ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50' : 'border-brand-purple bg-brand-purple/5' : 'hover:bg-muted'}`} onClick={() => handleSelectAnswer(index)}>
                         <div className="flex items-center justify-between">
                           <span>{option}</span>
-                          {hasAnswered && (
-                            index === quizQuestions[activeQuestionIndex].correctAnswer ? (
-                              <Check className="h-5 w-5 text-green-500" />
-                            ) : selectedAnswer === index ? (
-                              <X className="h-5 w-5 text-red-500" />
-                            ) : null
-                          )}
+                          {hasAnswered && (index === quizQuestions[activeQuestionIndex].correctAnswer ? <Check className="h-5 w-5 text-green-500" /> : selectedAnswer === index ? <X className="h-5 w-5 text-red-500" /> : null)}
                         </div>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                   
                   <div className="flex justify-between">
-                    {!hasAnswered ? (
-                      <Button onClick={checkAnswer} disabled={selectedAnswer === null} className="bg-brand-purple hover:bg-brand-purple/90">
+                    {!hasAnswered ? <Button onClick={checkAnswer} disabled={selectedAnswer === null} className="bg-brand-purple hover:bg-brand-purple/90">
                         Check Answer
-                      </Button>
-                    ) : (
-                      <Button onClick={nextQuestion} className="bg-brand-teal hover:bg-brand-teal/90">
+                      </Button> : <Button onClick={nextQuestion} className="bg-brand-teal hover:bg-brand-teal/90">
                         {activeQuestionIndex < quizQuestions.length - 1 ? 'Next Question' : 'See Results'}
-                      </Button>
-                    )}
+                      </Button>}
                   </div>
-                </div>
-              ) : (
-                <div className="text-center py-6">
+                </div> : <div className="text-center py-6">
                   <div className="mb-4">
                     <Award className="h-16 w-16 mx-auto text-brand-purple mb-2" />
                     <h3 className="text-2xl font-semibold mb-1">Quiz Completed!</h3>
@@ -217,8 +149,7 @@ const CulturalHub = () => {
                   <Button onClick={restartQuiz} className="bg-brand-purple hover:bg-brand-purple/90">
                     Try Another Quiz
                   </Button>
-                </div>
-              )}
+                </div>}
             </CardContent>
           </Card>
         </TabsContent>
@@ -284,8 +215,6 @@ const CulturalHub = () => {
 
         <CulturalVideo />
       </Tabs>
-    </div>
-  );
+    </div>;
 };
-
 export default CulturalHub;
