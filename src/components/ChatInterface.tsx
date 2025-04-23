@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,13 +7,7 @@ import { ChatMessageList } from "./chat/ChatMessageList";
 import { ChatMessage as MessageType } from "./chat/chatTypes";
 import { toast } from "@/hooks/use-toast";
 
-// Add SpeechRecognition types
-declare global {
-  interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
-  }
-}
+// SpeechRecognition types are now defined in speech-recognition.d.ts
 
 const languages = [
   { code: "en", name: "English" },
@@ -47,7 +40,7 @@ const ChatInterface = () => {
       toast({
         title: "Varning",
         description: "Din webbläsare stöder inte röstinspelning. Försök med Chrome eller Edge.",
-        variant: "warning",
+        variant: "default",
       });
     }
   }, []);
@@ -107,7 +100,7 @@ const ChatInterface = () => {
           lang === "sv"
             ? "Språket har ändrats till svenska."
             : lang === "es"
-            ? "El idioma ha cambiado al español."
+            ? "El idioma ha cambiado al espa��ol."
             : lang === "zh"
             ? "语言已更改为中文。"
             : lang === "ar"

@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Send, Mic, MicOff } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+// SpeechRecognition types are now defined in speech-recognition.d.ts
+
 interface ChatInputBarProps {
   inputMessage: string;
   setInputMessage: (msg: string) => void;
@@ -25,8 +27,8 @@ export const ChatInputBar = ({
   useEffect(() => {
     // Initialize speech recognition
     if (window.SpeechRecognition || window.webkitSpeechRecognition) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognitionRef.current = new SpeechRecognition();
+      const SpeechRecognitionConstructor = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognitionConstructor();
       recognitionRef.current.continuous = true;
       recognitionRef.current.interimResults = true;
       recognitionRef.current.lang = 'sv-SE'; // Default to Swedish
