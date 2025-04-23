@@ -156,58 +156,7 @@ const CulturalHub = () => {
         
         <TabsContent value="community" className="mt-0">
           <Card>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4">Community Hub</h3>
-              <div className="space-y-4">
-                <div className="p-4 border rounded-lg">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-10 w-10 rounded-full bg-brand-dark flex items-center justify-center">
-                      <User className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Maria S.</p>
-                      <div className="flex items-center">
-                        <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                        <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                        <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                        <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                        <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                        <span className="ml-1 text-xs text-muted-foreground">5.0</span>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    "The Cultural Connection Hub made my waiting time fly by! I learned so much about Swedish business customs while waiting for customer support."
-                  </p>
-                </div>
-                
-                <div className="p-4 border rounded-lg">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-10 w-10 rounded-full bg-brand-dark flex items-center justify-center">
-                      <User className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Carlos T.</p>
-                      <div className="flex items-center">
-                        <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                        <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                        <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                        <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                        <Star className="h-3 w-3 text-yellow-500" />
-                        <span className="ml-1 text-xs text-muted-foreground">4.0</span>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    "I was able to learn and earn rewards while waiting for technical support. The quiz about global business etiquette was both fun and educational."
-                  </p>
-                </div>
-                
-                <Button className="w-full bg-brand-purple hover:bg-brand-purple/90">
-                  Share Your Experience
-                </Button>
-              </div>
-            </CardContent>
+            
           </Card>
         </TabsContent>
 
