@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -137,7 +138,19 @@ const ChatInterface = () => {
   return (
     <Card className="w-full max-w-md mx-auto overflow-hidden border-2 border-brand-purple/20 shadow-lg">
       <Tabs defaultValue="chat" className="w-full">
-        
+        {/* Centered navigation tabs */}
+        <div className="flex justify-center border-b">
+          <TabsList className="mx-auto my-2">
+            <TabsTrigger value="chat" className="px-4">
+              <MessageCircle className="h-4 w-4 mr-2" />
+              Chat
+            </TabsTrigger>
+            <TabsTrigger value="translate" className="px-4">
+              <Languages className="h-4 w-4 mr-2" />
+              Translate
+            </TabsTrigger>
+          </TabsList>
+        </div>
         
         <TabsContent value="chat" className="m-0">
           <CardContent className="p-0">
