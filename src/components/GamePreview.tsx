@@ -57,7 +57,7 @@ const GamePreview = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 justify-center mb-8">
         {miniGames.map((game, idx) => (
-          <button
+          <div // Changed from <button> to <div>
             key={game.title}
             className={`rounded-xl border p-6 flex flex-col gap-3 items-center shadow-md transition-transform duration-150 bg-white hover:scale-105 card-hover ${game.color}`}
             onClick={() => setSelectedGameIdx(idx)}
@@ -67,7 +67,7 @@ const GamePreview = () => {
             <h3 className="font-semibold mb-1 text-base">{game.title}</h3>
             <p className="text-xs text-muted-foreground text-center">{game.description}</p>
             <Button className="mt-2 bg-brand-teal w-full">Spela</Button>
-          </button>
+          </div>
         ))}
       </div>
       <div className="text-center text-muted-foreground text-xs">
