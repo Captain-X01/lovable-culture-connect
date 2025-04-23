@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -5,6 +6,15 @@ import { MessageCircle, Languages } from "lucide-react";
 import { ChatInputBar } from "./chat/ChatInputBar";
 import { ChatMessageList } from "./chat/ChatMessageList";
 import { ChatMessage as MessageType } from "./chat/chatTypes";
+import { toast } from "@/hooks/use-toast";
+
+// Add SpeechRecognition types
+declare global {
+  interface Window {
+    SpeechRecognition: typeof SpeechRecognition;
+    webkitSpeechRecognition: typeof SpeechRecognition;
+  }
+}
 
 const languages = [
   { code: "en", name: "English" },
@@ -30,6 +40,17 @@ const ChatInterface = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    // Check if browser supports speech recognition
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      toast({
+        title: "Varning",
+        description: "Din webbläsare stöder inte röstinspelning. Försök med Chrome eller Edge.",
+        variant: "warning",
+      });
+    }
+  }, []);
 
   const handleSendMessage = () => {
     if (inputMessage.trim() === "") return;
@@ -64,28 +85,14 @@ const ChatInterface = () => {
   };
 
   const toggleRecording = () => {
-    setIsRecording(!isRecording);
-
-    if (!isRecording) {
+    setIsRecording(prev => !prev);
+    
+    // If stopping recording, send the message if there's any input
+    if (isRecording && inputMessage.trim() !== "") {
+      // Small delay to allow final transcript to be processed
       setTimeout(() => {
-        setIsRecording(false);
-        setMessages([
-          ...messages,
-          { id: Date.now(), text: "Voice message sent", isUser: true, timestamp: new Date() }
-        ]);
-
-        setTimeout(() => {
-          setMessages(prev => [
-            ...prev,
-            {
-              id: Date.now(),
-              text: "I've received your voice message. How else can I assist you today?",
-              isUser: false,
-              timestamp: new Date()
-            }
-          ]);
-        }, 1000);
-      }, 3000);
+        handleSendMessage();
+      }, 500);
     }
   };
 
