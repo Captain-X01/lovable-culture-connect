@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Volume2, Translate } from "lucide-react";
+import { Volume2, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface MessageActionsProps {
@@ -39,7 +39,7 @@ export const MessageActions = ({
         disabled={isTranslating || translationShown}
         className="p-1 text-brand-teal hover:bg-brand-teal/10 focus:ring-0 focus:ring-offset-0"
       >
-        <Translate size={18} />
+        <Languages size={18} />
       </Button>
     </div>
   );
