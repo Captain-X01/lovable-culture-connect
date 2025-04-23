@@ -113,7 +113,7 @@ const ChatInterface = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto overflow-hidden border-2 border-brand-purple/20 shadow-lg">
+    <Card className="w-full max-w-xl mx-auto overflow-hidden border-2 border-brand-purple/20 shadow-lg">
       <Tabs defaultValue="chat" className="w-full">
         <div className="flex justify-center border-b">
           <TabsList className="mx-auto my-2">
