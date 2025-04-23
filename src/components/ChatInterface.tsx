@@ -137,18 +137,7 @@ const ChatInterface = () => {
   return (
     <Card className="w-full max-w-md mx-auto overflow-hidden border-2 border-brand-purple/20 shadow-lg">
       <Tabs defaultValue="chat" className="w-full">
-        <div className="bg-brand-purple text-white p-3">
-          <TabsList className="bg-brand-purple/40 grid w-full grid-cols-2">
-            <TabsTrigger value="chat" className="data-[state=active]:bg-white data-[state=active]:text-brand-purple">
-              <MessageCircle className="h-4 w-4 mr-2" />
-              Chat
-            </TabsTrigger>
-            <TabsTrigger value="translate" className="data-[state=active]:bg-white data-[state=active]:text-brand-purple">
-              <Languages className="h-4 w-4 mr-2" />
-              Translate
-            </TabsTrigger>
-          </TabsList>
-        </div>
+        
         
         <TabsContent value="chat" className="m-0">
           <CardContent className="p-0">
