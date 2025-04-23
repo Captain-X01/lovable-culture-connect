@@ -1,10 +1,27 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Award, Users, User, Star, Check, X } from "lucide-react";
+import { Award, Check, X } from "lucide-react";
 import CulturalFAQ from "./CulturalFAQ";
-import CulturalVideo from "./CulturalVideo";
+
+// Nytt kundservicerelaterat tips
+const customerServiceTips = [
+  {
+    title: "Tips för effektiv kommunikation",
+    content: "Var tydlig och lyssna aktivt på kundens behov – ställ öppna frågor och visa förståelse."
+  },
+  {
+    title: "Skapa ett gott första intryck",
+    content: "Hälsa vänligt och visa ett välkomnande bemötande. Ett leende kan göra stor skillnad!"
+  },
+  {
+    title: "Snabb återkoppling",
+    content: "Svara på frågor så snabbt som möjligt och informera kunden om ungefärlig väntetid."
+  },
+];
+
 const quizQuestions = [{
   question: "What is the main purpose of the Cultural Connection Hub?",
   options: ["To provide entertainment only", "To transform waiting time into a cultural experience", "To replace human customer service", "To collect customer data"],
@@ -18,12 +35,14 @@ const quizQuestions = [{
   options: ["Crypto tokens", "Free products", "Rewards like discounts", "Airline miles"],
   correctAnswer: 2
 }];
+
 const CulturalHub = () => {
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [hasAnswered, setHasAnswered] = useState(false);
   const [score, setScore] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
+
   const handleSelectAnswer = (index: number) => {
     if (hasAnswered) return;
     setSelectedAnswer(index);
@@ -51,12 +70,9 @@ const CulturalHub = () => {
     setScore(0);
     setQuizCompleted(false);
   };
+
   return <div className="w-full max-w-2xl mx-auto">
-      
-      
       <Tabs defaultValue="quiz" className="w-full">
-        
-        
         <TabsContent value="insights" className="mt-0">
           <Card>
             <CardContent className="p-6">
@@ -154,13 +170,21 @@ const CulturalHub = () => {
         
         <TabsContent value="community" className="mt-0">
           <Card>
-            
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold mb-4">Tips för kundservice</h3>
+              <ul className="space-y-5">
+                {customerServiceTips.map((tip, idx) => (
+                  <li key={idx} className="bg-brand-light p-4 rounded-lg border-l-4 border-brand-purple">
+                    <div className="font-semibold mb-1">{tip.title}</div>
+                    <div className="text-muted-foreground text-sm">{tip.content}</div>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
           </Card>
         </TabsContent>
 
         <CulturalFAQ />
-
-        <CulturalVideo />
       </Tabs>
     </div>;
 };
