@@ -1,18 +1,10 @@
-
 import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageCircle, Send, Mic, MicOff, Languages } from "lucide-react";
-
-interface Message {
-  id: number;
-  text: string;
-  isUser: boolean;
-  timestamp: Date;
-  translateOptions?: boolean;
-}
+import { MessageCircle, Languages } from "lucide-react";
+import { ChatInputBar } from "./chat/ChatInputBar";
+import { ChatMessageList } from "./chat/ChatMessageList";
+import { ChatMessage as MessageType } from "./chat/chatTypes";
 
 const languages = [
   { code: "en", name: "English" },
@@ -23,19 +15,14 @@ const languages = [
 ];
 
 const ChatInterface = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    { 
-      id: 1, 
-      text: "Hello! How can I help you today?", 
-      isUser: false, 
-      timestamp: new Date() 
-    }
+  const [messages, setMessages] = useState<MessageType[]>([
+    { id: 1, text: "Hello! How can I help you today?", isUser: false, timestamp: new Date() }
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("en");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -46,19 +33,13 @@ const ChatInterface = () => {
 
   const handleSendMessage = () => {
     if (inputMessage.trim() === "") return;
-    
+
     setMessages([
       ...messages,
-      { 
-        id: Date.now(), 
-        text: inputMessage, 
-        isUser: true, 
-        timestamp: new Date() 
-      }
+      { id: Date.now(), text: inputMessage, isUser: true, timestamp: new Date() }
     ]);
-    
     setInputMessage("");
-    
+
     setTimeout(() => {
       let response = "";
       if (inputMessage.toLowerCase().includes("wait time") || inputMessage.toLowerCase().includes("waiting")) {
@@ -68,13 +49,13 @@ const ChatInterface = () => {
       } else {
         response = "Thank you for your message. Our customer service team is dedicated to providing you with the best experience.";
       }
-      
+
       setMessages(prev => [
         ...prev,
-        { 
-          id: Date.now(), 
-          text: response, 
-          isUser: false, 
+        {
+          id: Date.now(),
+          text: response,
+          isUser: false,
           timestamp: new Date(),
           translateOptions: inputMessage.toLowerCase().includes("language") || inputMessage.toLowerCase().includes("translate")
         }
@@ -84,28 +65,23 @@ const ChatInterface = () => {
 
   const toggleRecording = () => {
     setIsRecording(!isRecording);
-    
+
     if (!isRecording) {
       setTimeout(() => {
         setIsRecording(false);
         setMessages([
           ...messages,
-          { 
-            id: Date.now(), 
-            text: "Voice message sent", 
-            isUser: true, 
-            timestamp: new Date() 
-          }
+          { id: Date.now(), text: "Voice message sent", isUser: true, timestamp: new Date() }
         ]);
-        
+
         setTimeout(() => {
           setMessages(prev => [
             ...prev,
-            { 
-              id: Date.now(), 
-              text: "I've received your voice message. How else can I assist you today?", 
-              isUser: false, 
-              timestamp: new Date() 
+            {
+              id: Date.now(),
+              text: "I've received your voice message. How else can I assist you today?",
+              isUser: false,
+              timestamp: new Date()
             }
           ]);
         }, 1000);
@@ -115,30 +91,30 @@ const ChatInterface = () => {
 
   const changeLanguage = (lang: string) => {
     setCurrentLanguage(lang);
-    
+
     setMessages(prev => [
       ...prev,
-      { 
-        id: Date.now(), 
-        text: lang === "sv" ? "Språket har ändrats till svenska." :
-              lang === "es" ? "El idioma ha cambiado al español." :
-              lang === "zh" ? "语言已更改为中文。" :
-              lang === "ar" ? "تم تغيير اللغة إلى العربية." : 
-              "Language has been changed to English.", 
-        isUser: false, 
-        timestamp: new Date() 
+      {
+        id: Date.now(),
+        text:
+          lang === "sv"
+            ? "Språket har ändrats till svenska."
+            : lang === "es"
+            ? "El idioma ha cambiado al español."
+            : lang === "zh"
+            ? "语言已更改为中文。"
+            : lang === "ar"
+            ? "تم تغيير اللغة إلى العربية."
+            : "Language has been changed to English.",
+        isUser: false,
+        timestamp: new Date()
       }
     ]);
-  };
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
   return (
     <Card className="w-full max-w-md mx-auto overflow-hidden border-2 border-brand-purple/20 shadow-lg">
       <Tabs defaultValue="chat" className="w-full">
-        {/* Centered navigation tabs */}
         <div className="flex justify-center border-b">
           <TabsList className="mx-auto my-2">
             <TabsTrigger value="chat" className="px-4">
@@ -151,77 +127,27 @@ const ChatInterface = () => {
             </TabsTrigger>
           </TabsList>
         </div>
-        
+
         <TabsContent value="chat" className="m-0">
           <CardContent className="p-0">
             <div className="h-[400px] flex flex-col">
-              <div className="flex-1 overflow-y-auto p-4">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`mb-4 flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                        message.isUser
-                          ? 'bg-brand-purple text-white rounded-tr-none'
-                          : 'bg-muted rounded-tl-none'
-                      }`}
-                    >
-                      <p>{message.text}</p>
-                      <p className={`text-xs mt-1 ${message.isUser ? 'text-white/70' : 'text-muted-foreground'}`}>
-                        {formatTime(message.timestamp)}
-                      </p>
-                      
-                      {message.translateOptions && (
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          {languages.slice(0, 3).map(lang => (
-                            <Button 
-                              key={lang.code} 
-                              variant="outline" 
-                              size="sm"
-                              onClick={() => changeLanguage(lang.code)}
-                              className={`text-xs ${currentLanguage === lang.code ? 'bg-brand-teal/20' : ''}`}
-                            >
-                              {lang.name}
-                            </Button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-                <div ref={messagesEndRef} />
-              </div>
-              
-              <div className="border-t p-3 bg-white">
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="Type your message..."
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-                    className="flex-1"
-                  />
-                  
-                  <Button
-                    onClick={toggleRecording}
-                    variant={isRecording ? "destructive" : "outline"}
-                    size="icon"
-                    className="flex-shrink-0"
-                  >
-                    {isRecording ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-                  </Button>
-                  
-                  <Button onClick={handleSendMessage} className="flex-shrink-0 bg-brand-purple hover:bg-brand-purple/90">
-                    <Send className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
+              <ChatMessageList
+                messages={messages}
+                currentLanguage={currentLanguage}
+                onLanguageChange={changeLanguage}
+                messagesEndRef={messagesEndRef}
+              />
+              <ChatInputBar
+                inputMessage={inputMessage}
+                setInputMessage={setInputMessage}
+                isRecording={isRecording}
+                onToggleRecording={toggleRecording}
+                onSend={handleSendMessage}
+              />
             </div>
           </CardContent>
         </TabsContent>
-        
+
         <TabsContent value="translate" className="m-0">
           <CardContent className="p-4">
             <div className="space-y-4">
@@ -229,28 +155,30 @@ const ChatInterface = () => {
                 <h3 className="font-semibold mb-2">Select Language</h3>
                 <div className="grid grid-cols-2 gap-2">
                   {languages.map(lang => (
-                    <Button 
+                    <button
                       key={lang.code}
-                      variant="outline" 
-                      className={`w-full justify-start ${currentLanguage === lang.code ? 'bg-brand-teal/20 border-brand-teal' : ''}`}
+                      className={`w-full justify-start border px-4 py-2 rounded-md transition-colors text-left ${currentLanguage === lang.code ? "bg-brand-teal/20 border-brand-teal" : ""}`}
                       onClick={() => changeLanguage(lang.code)}
                     >
                       {lang.name}
-                    </Button>
+                    </button>
                   ))}
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="font-semibold mb-2">Real-time Translation</h3>
                 <p className="text-muted-foreground text-sm mb-2">
                   All communication will be automatically translated to your selected language. You can change languages at any time without interrupting your customer service experience.
                 </p>
                 <div className="flex justify-center mt-4">
-                  <Button onClick={() => setCurrentLanguage("en")} className="bg-brand-purple hover:bg-brand-purple/90">
+                  <button
+                    onClick={() => setCurrentLanguage("en")}
+                    className="flex items-center bg-brand-purple hover:bg-brand-purple/90 text-white font-medium px-4 py-2 rounded"
+                  >
                     <Languages className="h-4 w-4 mr-2" />
                     Return to Chat
-                  </Button>
+                  </button>
                 </div>
               </div>
             </div>
